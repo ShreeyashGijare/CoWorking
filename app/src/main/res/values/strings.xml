@@ -7,6 +7,10 @@
     <string name="password">Password</string>
     <string name="log_in">Log In</string>
     <string name="new_user_create_account">New user?<font color='#253FAC'><u> Create an account</u></font></string>
+    <string name="existing_user_log_in">Existing user?<font color='#253FAC'><u> Log In</u></font></string>
+    <string name="create_an_account">Create an Account</string>
+    <string name="create_an_account_small_case">Create an account</string>
+    <string name="mobile_number">Mobile number</string>
 
 
 </resources>

@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.fragments.CreateAccountFragment">
+
+    <TextView
+        android:id="@+id/tvLblCreateAnAccount"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/dimen_24"
+        android:layout_marginTop="@dimen/dimen_45"
+        android:fontFamily="@font/poppins_semi_bold"
+        android:text="@string/create_an_account"
+        android:textSize="@dimen/size_24"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+
+    <TextView
+        android:id="@+id/tvLblFullName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/size_24"
+        android:layout_marginTop="@dimen/dimen_60"
+        android:text="@string/mobile_number_or_email"
+        android:textColor="@color/primary_text_color"
+        android:textSize="@dimen/size_16"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tvLblCreateAnAccount" />
+
+    <com.example.coworking.ui.widgets.GlobalEditTextWidget
+        android:id="@+id/etFullName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/size_24"
+        android:layout_marginTop="@dimen/dimen_10"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tvLblFullName" />
+
+    <TextView
+        android:id="@+id/tvLblMobileNumber"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/size_24"
+        android:layout_marginTop="@dimen/dimen_24"
+        android:text="@string/mobile_number"
+        android:textColor="@color/primary_text_color"
+        android:textSize="@dimen/size_16"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/etFullName" />
+
+    <com.example.coworking.ui.widgets.GlobalEditTextWidget
+        android:id="@+id/etMobileNumber"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/dimen_24"
+        android:layout_marginTop="@dimen/dimen_10"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tvLblMobileNumber" />
+
+    <TextView
+        android:id="@+id/tvLblEmailId"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/size_24"
+        android:layout_marginTop="@dimen/dimen_24"
+        android:text="@string/mobile_number"
+        android:textColor="@color/primary_text_color"
+        android:textSize="@dimen/size_16"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/etMobileNumber" />
+
+    <com.example.coworking.ui.widgets.GlobalEditTextWidget
+        android:id="@+id/etEmailId"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/dimen_24"
+        android:layout_marginTop="@dimen/dimen_10"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tvLblEmailId" />
+
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btnLogIn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/dimen_24"
+        android:layout_marginBottom="@dimen/dimen_50"
+        android:background="@drawable/dark_blue_background"
+        android:fontFamily="@font/poppins_bold"
+        android:gravity="center"
+        android:text="@string/create_an_account_small_case"
+        android:textAllCaps="false"
+        android:textColor="@color/white"
+        android:textSize="@dimen/size_16"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent" />
+
+    <TextView
+        android:id="@+id/tvLblCreateAccount"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/poppins_regular"
+        android:gravity="center"
+        android:text="@string/existing_user_log_in"
+        android:textColor="@color/primary_text_color"
+        android:textSize="@dimen/size_16"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/btnLogIn" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
