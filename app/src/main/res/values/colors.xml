@@ -18,5 +18,6 @@
 
     <color name="primary_text_color">#494949</color>
     <color name="secondary_text_color">#898989</color>
+    <color name="tertiary_text_color">#5B6180</color>
 
 </resources>

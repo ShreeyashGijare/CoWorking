@@ -11,6 +11,7 @@ import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.example.coworking.R
+import com.example.coworking.data.data_models.get_slots.Slot
 import com.example.coworking.databinding.FragmentLoginBinding
 import com.example.coworking.ui.viewmodel.LoginViewModel
 import com.example.coworking.utils.UserManager
@@ -22,6 +23,7 @@ class LoginFragment : Fragment() {
 
     private lateinit var mBinding: FragmentLoginBinding
     private val loginViewModel by viewModels<LoginViewModel>()
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -53,7 +55,6 @@ class LoginFragment : Fragment() {
 
     private fun setObserver() {
         loginViewModel._responseLogin.observe(viewLifecycleOwner) {
-            Toast.makeText(requireActivity(), it.message, Toast.LENGTH_SHORT).show()
             UserManager.setCurrentCustomerId(it.user_id, mBinding.etMobileNumber.getData())
             findNavController().navigate(R.id.nav_main_content)
         }

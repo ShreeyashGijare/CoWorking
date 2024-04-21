@@ -43,6 +43,4 @@ interface APIInterface {
     suspend fun getUserBookings(
         @Query("user_id") userId: Int
     ): GetUserBookingResponse
-
-
 }

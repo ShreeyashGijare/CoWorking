@@ -16,6 +16,10 @@
     <string name="booked_on">Booked on</string>
     <string name="name">Name</string>
     <string name="set_strings_starting_with_colon">:  %1$s</string>
+    <string name="meeting_room">Meeting\nroom</string>
+    <string name="book_work_station">Book Work Station</string>
+    <string name="select_date_slot"><![CDATA[Select Date & Slot]]></string>
+    <string name="next">Next</string>
 
 
 </resources>

@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/white"
     tools:context=".ui.fragments.HomeFragment">
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -65,23 +66,59 @@
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@id/clToolBar">
 
-        <ImageView
+
+        <LinearLayout
+            android:id="@+id/llBookWorkStation"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="@dimen/dimen_8"
             android:layout_weight="1"
-            android:background="@drawable/dark_blue_background"
-            android:padding="@dimen/dimen_30"
-            android:src="@drawable/ic_book_work_station" />
+            android:orientation="vertical">
 
-        <ImageView
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/dimen_8"
+                android:background="@drawable/dark_blue_background"
+                android:padding="@dimen/dimen_30"
+                android:src="@drawable/ic_book_work_station" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dimen_15"
+                android:fontFamily="@font/poppins_medium"
+                android:gravity="center"
+                android:text="@string/book_work_station"
+                android:textSize="@dimen/size_20" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/llMeetingRoom"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/dimen_149"
-            android:layout_marginStart="@dimen/dimen_8"
+            android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:background="@drawable/dark_blue_background"
-            android:padding="@dimen/dimen_30"
-            android:src="@drawable/ic_meeting_room" />
+            android:orientation="vertical">
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dimen_149"
+                android:layout_marginStart="@dimen/dimen_8"
+                android:background="@drawable/dark_blue_background"
+                android:padding="@dimen/dimen_30"
+                android:src="@drawable/ic_meeting_room" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dimen_15"
+                android:fontFamily="@font/poppins_medium"
+                android:gravity="center"
+                android:text="@string/meeting_room"
+                android:textSize="@dimen/size_20" />
+
+        </LinearLayout>
+
 
     </LinearLayout>
 

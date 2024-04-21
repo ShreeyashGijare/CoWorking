@@ -24,9 +24,18 @@ class HomeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-
         mBinding.btnBookingHistory.setOnClickListener {
             findNavController().navigate(R.id.action_homeFragment_to_bookingHistoryFragment)
+        }
+
+        mBinding.llBookWorkStation.setOnClickListener {
+            val actionToSelectDateAndSlotFragment = HomeFragmentDirections.actionHomeFragmentToSelectDateAndSlotFragment(1)
+            findNavController().navigate(actionToSelectDateAndSlotFragment)
+        }
+
+        mBinding.llMeetingRoom.setOnClickListener {
+            val actionToSelectDateAndSlotFragment = HomeFragmentDirections.actionHomeFragmentToSelectDateAndSlotFragment(2)
+            findNavController().navigate(actionToSelectDateAndSlotFragment)
         }
 
     }
