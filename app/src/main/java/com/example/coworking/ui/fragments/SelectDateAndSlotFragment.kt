@@ -2,21 +2,22 @@ package com.example.coworking.ui.fragments
 
 import android.os.Bundle
 import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.GridLayoutManager
+import com.example.coworking.R
 import com.example.coworking.data.data_models.get_slot_availability.Availability
 import com.example.coworking.data.data_models.get_slots.Slot
 import com.example.coworking.databinding.FragmentSelectDateAndSlotBinding
 import com.example.coworking.ui.adapter.DateAndSlotAdapter
 import com.example.coworking.ui.interfaces.SlotClickListener
 import com.example.coworking.ui.viewmodel.SlotsViewModel
+import com.example.coworking.utils.GlobalSnackBar
 import dagger.hilt.android.AndroidEntryPoint
 import java.util.Date
 
@@ -48,7 +49,11 @@ class SelectDateAndSlotFragment : Fragment(), SlotClickListener {
 
         mBinding.btnNext.setOnClickListener {
             if (selectedSlot == null) {
-                Toast.makeText(requireActivity(), "Please select a Slot", Toast.LENGTH_SHORT).show()
+                GlobalSnackBar.showSnackBar(
+                    mBinding.root,
+                    requireActivity().getString(R.string.error_select_a_slot),
+                    false
+                )
             } else {
                 val action =
                     SelectDateAndSlotFragmentDirections.actionSelectDateAndSlotFragmentToAvailableDesksOrRoomsFragment(

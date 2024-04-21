@@ -23,6 +23,16 @@
     <string name="available_desks">Available desks</string>
     <string name="available_rooms">Available rooms</string>
     <string name="book_desk">Book Desk</string>
+    <string name="confirm_booking">Confirm booking</string>
+
+    <string name="popup_desk_id">Desk ID : <font color='#494949'>%1$s</font></string>
+    <string name="popup_desk_number">Desk <font color='#494949'>%1$s</font></string>
+    <string name="popup_slot_details">Slot : <font color='#494949'>%1$s, %2$s</font></string>
+    <string name="confirm">Confirm</string>
+
+    <string name="error_select_a_slot">Please select a Slot</string>
+    <string name="error_select_a_desk">Please select a desk</string>
+    <string name="error_select_a_room">Please select a room</string>
 
 
 </resources>

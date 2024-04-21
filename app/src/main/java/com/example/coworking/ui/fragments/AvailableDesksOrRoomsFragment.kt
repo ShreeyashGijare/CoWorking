@@ -6,8 +6,9 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.GridLayoutManager
 import com.example.coworking.R
@@ -15,9 +16,11 @@ import com.example.coworking.data.data_models.confirm_booking.request.ConfirmBoo
 import com.example.coworking.data.data_models.get_slot_availability.Availability
 import com.example.coworking.data.data_models.get_slots.Slot
 import com.example.coworking.databinding.FragmentAvailableDesksOrRoomsBinding
+import com.example.coworking.databinding.GlobalPopupDialogBinding
 import com.example.coworking.ui.adapter.AvailableSlotsAdapter
 import com.example.coworking.ui.interfaces.SlotClickListener
 import com.example.coworking.ui.viewmodel.SlotsViewModel
+import com.example.coworking.utils.GlobalSnackBar
 import dagger.hilt.android.AndroidEntryPoint
 import java.util.Date
 
@@ -25,6 +28,8 @@ import java.util.Date
 class AvailableDesksOrRoomsFragment : Fragment(), SlotClickListener {
 
     private lateinit var mBinding: FragmentAvailableDesksOrRoomsBinding
+    private lateinit var alertDialogBinding: GlobalPopupDialogBinding
+    private lateinit var confirmBookingDialog: AlertDialog
     private val args: AvailableDesksOrRoomsFragmentArgs by navArgs()
     private val slotsViewModel by viewModels<SlotsViewModel>()
 
@@ -56,17 +61,17 @@ class AvailableDesksOrRoomsFragment : Fragment(), SlotClickListener {
 
         mBinding.btnBookDesk.setOnClickListener {
             if (selectedRoomOrDesk == null) {
-                val toastMessage =
-                    if (args.TypeId == 1) "Please select a desk" else "Please select a room"
-                Toast.makeText(requireActivity(), toastMessage, Toast.LENGTH_SHORT).show()
-            } else {
-                val slotToBeBooked = ConfirmBookingRequestBody(
-                    date = Date(2024, 5, 21),
-                    slotId = args.Slot.slot_id,
-                    workspaceId = selectedRoomOrDesk!!.workspace_id,
-                    type = args.TypeId
+                val errorMessage =
+                    if (args.TypeId == 1) getString(R.string.error_select_a_desk) else getString(R.string.error_select_a_room)
+                GlobalSnackBar.showSnackBar(
+                    mBinding.root,
+                    errorMessage,
+                    false
                 )
-                slotsViewModel.confirmBooking(slotToBeBooked)
+
+
+            } else {
+                confirmAlertDialog()
             }
         }
     }
@@ -77,7 +82,9 @@ class AvailableDesksOrRoomsFragment : Fragment(), SlotClickListener {
         }
 
         slotsViewModel._confirmBookingResponse.observe(viewLifecycleOwner) {
-            Toast.makeText(requireActivity(), it.message, Toast.LENGTH_SHORT).show()
+            confirmBookingDialog.dismiss()
+            GlobalSnackBar.showSnackBar(mBinding.root, it.message, true)
+            findNavController().navigate(R.id.action_availableDesksOrRoomsFragment_to_homeFragment)
         }
     }
 
@@ -95,5 +102,43 @@ class AvailableDesksOrRoomsFragment : Fragment(), SlotClickListener {
 
     override fun availableSlotClickListener(availability: Availability) {
         selectedRoomOrDesk = availability
+    }
+
+    private fun confirmAlertDialog() {
+        val alertDialogBuilder: AlertDialog.Builder =
+            AlertDialog.Builder(requireActivity(), R.style.PopupTheme)
+        alertDialogBinding = GlobalPopupDialogBinding.inflate(layoutInflater)
+        alertDialogBuilder.setView(alertDialogBinding.root)
+
+        confirmBookingDialog = alertDialogBuilder.create()
+
+        alertDialogBinding.tvDeskId.text =
+            requireContext().getString(R.string.popup_desk_id, args.Slot.slot_id.toString())
+        alertDialogBinding.tvDeskNumber.text =
+            requireContext().getString(
+                R.string.popup_desk_number,
+                selectedRoomOrDesk!!.workspace_id.toString()
+            )
+        alertDialogBinding.tvSlotDetails.text =
+            requireContext().getString(
+                R.string.popup_slot_details,
+                "Wed 31 May",
+                args.Slot.slot_name
+            )
+
+        alertDialogBinding.btnConfirm.setOnClickListener {
+            val slotToBeBooked = ConfirmBookingRequestBody(
+                date = Date(2024, 5, 21),
+                slotId = args.Slot.slot_id,
+                workspaceId = selectedRoomOrDesk!!.workspace_id,
+                type = args.TypeId
+            )
+            slotsViewModel.confirmBooking(slotToBeBooked)
+        }
+
+        alertDialogBinding.ivCancel.setOnClickListener {
+            confirmBookingDialog.dismiss()
+        }
+        confirmBookingDialog.show()
     }
 }

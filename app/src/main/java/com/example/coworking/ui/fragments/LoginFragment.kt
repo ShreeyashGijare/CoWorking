@@ -3,17 +3,16 @@ package com.example.coworking.ui.fragments
 import android.os.Bundle
 import android.text.InputType
 import android.text.method.PasswordTransformationMethod
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.example.coworking.R
-import com.example.coworking.data.data_models.get_slots.Slot
 import com.example.coworking.databinding.FragmentLoginBinding
 import com.example.coworking.ui.viewmodel.LoginViewModel
+import com.example.coworking.utils.GlobalSnackBar
 import com.example.coworking.utils.UserManager
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -60,7 +59,11 @@ class LoginFragment : Fragment() {
         }
 
         loginViewModel.errorData.observe(viewLifecycleOwner) {
-            Toast.makeText(requireActivity(), it, Toast.LENGTH_SHORT).show()
+            GlobalSnackBar.showSnackBar(
+                mBinding.root,
+                it,
+                false
+            )
         }
     }
 }

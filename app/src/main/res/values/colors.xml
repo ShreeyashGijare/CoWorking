@@ -20,4 +20,7 @@
     <color name="secondary_text_color">#898989</color>
     <color name="tertiary_text_color">#5B6180</color>
 
+    <color name="success_green">#19AD1E</color>
+    <color name="error_red">#FF0000</color>
+
 </resources>

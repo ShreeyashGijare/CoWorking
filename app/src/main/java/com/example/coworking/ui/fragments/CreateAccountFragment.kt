@@ -13,6 +13,7 @@ import androidx.navigation.fragment.findNavController
 import com.example.coworking.R
 import com.example.coworking.databinding.FragmentCreateAccountBinding
 import com.example.coworking.ui.viewmodel.LoginViewModel
+import com.example.coworking.utils.GlobalSnackBar
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -45,19 +46,25 @@ class CreateAccountFragment : Fragment() {
                 mBinding.etMobileNumber.getData(),
                 mBinding.etEmailId.getData()
             )
-            Log.i("TAG", "onViewCreated: ${mBinding.etFullName.getData()} ")
-            Log.i("TAG", "onViewCreated: ${mBinding.etMobileNumber.getData()} ")
-            Log.i("TAG", "onViewCreated: ${mBinding.etEmailId.getData()} ")
         }
     }
 
     private fun setObserver() {
         loginViewModel.errorData.observe(viewLifecycleOwner) {
-            Toast.makeText(requireActivity(), it, Toast.LENGTH_SHORT).show()
+            GlobalSnackBar.showSnackBar(
+                mBinding.root,
+                it,
+                false
+            )
         }
 
         loginViewModel._responseCreateAccount.observe(viewLifecycleOwner) {
-            Toast.makeText(requireActivity(), it.message, Toast.LENGTH_SHORT).show()
+            GlobalSnackBar.showSnackBar(
+                mBinding.root,
+                it.message,
+                true
+            )
+            findNavController().navigate(R.id.action_createAccountFragment_to_loginFragment)
         }
     }
 }
