@@ -1,11 +1,12 @@
 package com.example.coworking.ui.activity
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.text.InputType.TYPE_TEXT_VARIATION_PASSWORD
-import android.text.method.PasswordTransformationMethod
+import androidx.appcompat.app.AppCompatActivity
 import com.example.coworking.databinding.ActivityMainBinding
+import dagger.hilt.android.AndroidEntryPoint
 
+
+@AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
 
     private lateinit var mBinding: ActivityMainBinding
@@ -14,9 +15,5 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         mBinding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(mBinding.root)
-
-
-
-
     }
 }

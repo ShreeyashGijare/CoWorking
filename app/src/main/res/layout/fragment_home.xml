@@ -1,14 +1,89 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ui.fragments.HomeFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/clToolBar"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="Home" />
+        android:layout_height="wrap_content"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
-</FrameLayout>
+        <ImageView
+            android:id="@+id/ivLogo"
+            android:layout_width="@dimen/dimen_30"
+            android:layout_height="@dimen/dimen_30"
+            android:layout_marginStart="@dimen/dimen_24"
+            android:layout_marginTop="@dimen/dimen_20"
+            android:src="@drawable/ic_main_logo"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tvLblCoWorking"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/dimen_2"
+            android:fontFamily="@font/poppins_bold"
+            android:text="@string/tv_lbl_co_working"
+            android:textSize="@dimen/size_14"
+            app:layout_constraintBottom_toBottomOf="@id/ivLogo"
+            app:layout_constraintLeft_toRightOf="@id/ivLogo"
+            app:layout_constraintTop_toTopOf="@id/ivLogo" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btnBookingHistory"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/dimen_24"
+            android:background="@drawable/dark_blue_background"
+            android:fontFamily="@font/poppins_medium"
+            android:paddingHorizontal="@dimen/size_12"
+            android:text="@string/booking_history"
+            android:textAllCaps="false"
+            android:textColor="@color/white"
+            android:textSize="@dimen/size_14"
+            app:layout_constraintBottom_toBottomOf="@id/ivLogo"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="@id/ivLogo" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dimen_50"
+        android:orientation="horizontal"
+        android:paddingHorizontal="@dimen/dimen_25"
+        android:weightSum="2"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/clToolBar">
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/dimen_8"
+            android:layout_weight="1"
+            android:background="@drawable/dark_blue_background"
+            android:padding="@dimen/dimen_30"
+            android:src="@drawable/ic_book_work_station" />
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dimen_149"
+            android:layout_marginStart="@dimen/dimen_8"
+            android:layout_weight="1"
+            android:background="@drawable/dark_blue_background"
+            android:padding="@dimen/dimen_30"
+            android:src="@drawable/ic_meeting_room" />
+
+    </LinearLayout>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

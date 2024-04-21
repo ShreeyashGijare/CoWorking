@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_main_content"
+    app:startDestination="@id/homeFragment">
+
+    <fragment
+        android:id="@+id/homeFragment"
+        android:name="com.example.coworking.ui.fragments.HomeFragment"
+        android:label="fragment_home"
+        tools:layout="@layout/fragment_home" >
+        <action
+            android:id="@+id/action_homeFragment_to_bookingHistoryFragment"
+            app:destination="@id/bookingHistoryFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_selectDateAndSlotFragment"
+            app:destination="@id/selectDateAndSlotFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/availableDesksOrRoomsFragment"
+        android:name="com.example.coworking.ui.fragments.AvailableDesksOrRoomsFragment"
+        android:label="fragment_available_desks_or_rooms"
+        tools:layout="@layout/fragment_available_desks_or_rooms" >
+        <action
+            android:id="@+id/action_availableDesksOrRoomsFragment_to_homeFragment"
+            app:destination="@id/homeFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/bookingHistoryFragment"
+        android:name="com.example.coworking.ui.fragments.BookingHistoryFragment"
+        android:label="fragment_booking_history"
+        tools:layout="@layout/fragment_booking_history" />
+    <fragment
+        android:id="@+id/selectDateAndSlotFragment"
+        android:name="com.example.coworking.ui.fragments.SelectDateAndSlotFragment"
+        android:label="fragment_select_date_and_slot"
+        tools:layout="@layout/fragment_select_date_and_slot" >
+        <action
+            android:id="@+id/action_selectDateAndSlotFragment_to_availableDesksOrRoomsFragment"
+            app:destination="@id/availableDesksOrRoomsFragment" />
+    </fragment>
+</navigation>
