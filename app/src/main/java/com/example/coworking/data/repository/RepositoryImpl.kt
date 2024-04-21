@@ -32,7 +32,7 @@ class RepositoryImpl(
         slotId: Int,
         type: Int
     ): GetSlotsAvailabilityResponse {
-        return getSlotAvailability(date, slotId, type)
+        return apiInterface.getSlotAvailability(date, slotId, type)
     }
 
     override suspend fun confirmSlotBooking(confirmBookingRequestBody: ConfirmBookingRequestBody): ConfirmBookingResponseBody {

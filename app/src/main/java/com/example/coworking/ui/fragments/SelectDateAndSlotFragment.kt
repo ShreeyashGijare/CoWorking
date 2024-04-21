@@ -1,6 +1,7 @@
 package com.example.coworking.ui.fragments
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -10,7 +11,7 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.GridLayoutManager
-import com.example.coworking.R
+import com.example.coworking.data.data_models.get_slot_availability.Availability
 import com.example.coworking.data.data_models.get_slots.Slot
 import com.example.coworking.databinding.FragmentSelectDateAndSlotBinding
 import com.example.coworking.ui.adapter.DateAndSlotAdapter
@@ -43,20 +44,25 @@ class SelectDateAndSlotFragment : Fragment(), SlotClickListener {
         selectedType = args.TypeId
         setObserver()
         setUpAdapter()
-        slotsViewModel.getAvailableSlotsForTheData(Date(2024, 5, 21))
+        slotsViewModel.getAvailableSlotsForTheDate(Date(2024, 5, 21))
 
         mBinding.btnNext.setOnClickListener {
             if (selectedSlot == null) {
                 Toast.makeText(requireActivity(), "Please select a Slot", Toast.LENGTH_SHORT).show()
             } else {
-                val action = SelectDateAndSlotFragmentDirections.actionSelectDateAndSlotFragmentToAvailableDesksOrRoomsFragment(selectedSlot!!, selectedType)
+                val action =
+                    SelectDateAndSlotFragmentDirections.actionSelectDateAndSlotFragmentToAvailableDesksOrRoomsFragment(
+                        selectedSlot!!,
+                        selectedType,
+                        ""
+                    )
                 findNavController().navigate(action)
             }
         }
     }
 
     private fun setObserver() {
-        slotsViewModel._availableSlots.observe(viewLifecycleOwner) {
+        slotsViewModel._availableSlotsForDate.observe(viewLifecycleOwner) {
             dateAndSlotAdapter.updateList(it.slots as ArrayList<Slot>)
         }
     }
@@ -72,5 +78,9 @@ class SelectDateAndSlotFragment : Fragment(), SlotClickListener {
 
     override fun dateAndSlotClickListener(slot: Slot) {
         selectedSlot = slot
+    }
+
+    override fun availableSlotClickListener(availability: Availability) {
+        Log.i("TAG", ": Not Required for now")
     }
 }

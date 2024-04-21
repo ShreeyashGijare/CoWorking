@@ -20,6 +20,9 @@
     <string name="book_work_station">Book Work Station</string>
     <string name="select_date_slot"><![CDATA[Select Date & Slot]]></string>
     <string name="next">Next</string>
+    <string name="available_desks">Available desks</string>
+    <string name="available_rooms">Available rooms</string>
+    <string name="book_desk">Book Desk</string>
 
 
 </resources>

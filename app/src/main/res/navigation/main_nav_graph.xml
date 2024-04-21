@@ -31,9 +31,7 @@
 
     <action
         android:id="@+id/action_nav_main_content"
-        app:destination="@+id/nav_main_content"
-        app:popUpTo="@id/loginFragment"/>
-
+        app:destination="@+id/nav_main_content" />
 
     <include app:graph="@navigation/nav_main_content" />
 </navigation>
