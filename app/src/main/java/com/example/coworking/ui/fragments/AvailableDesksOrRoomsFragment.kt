@@ -20,8 +20,10 @@ import com.example.coworking.databinding.GlobalPopupDialogBinding
 import com.example.coworking.ui.adapter.AvailableSlotsAdapter
 import com.example.coworking.ui.interfaces.SlotClickListener
 import com.example.coworking.ui.viewmodel.SlotsViewModel
+import com.example.coworking.utils.Constants.convertStringToDate
 import com.example.coworking.utils.GlobalSnackBar
 import dagger.hilt.android.AndroidEntryPoint
+import java.text.SimpleDateFormat
 import java.util.Date
 
 @AndroidEntryPoint
@@ -57,7 +59,11 @@ class AvailableDesksOrRoomsFragment : Fragment(), SlotClickListener {
 
         setUpAdapter()
         setObserver()
-        slotsViewModel.getSlotAvailability(Date(2024, 5, 21), args.Slot.slot_id, args.TypeId)
+        slotsViewModel.getSlotAvailability(
+            convertStringToDate(args.date),
+            args.Slot.slot_id,
+            args.TypeId
+        )
 
         mBinding.btnBookDesk.setOnClickListener {
             if (selectedRoomOrDesk == null) {
@@ -128,7 +134,7 @@ class AvailableDesksOrRoomsFragment : Fragment(), SlotClickListener {
         alertDialogBinding.tvSlotDetails.text =
             requireContext().getString(
                 R.string.popup_slot_details,
-                "Wed 31 May",
+                args.date,
                 args.Slot.slot_name
             )
 
@@ -147,4 +153,6 @@ class AvailableDesksOrRoomsFragment : Fragment(), SlotClickListener {
         }
         confirmBookingDialog.show()
     }
+
+
 }
