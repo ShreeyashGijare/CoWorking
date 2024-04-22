@@ -10,9 +10,11 @@ import com.example.coworking.data.data_models.get_slot_availability.GetSlotsAvai
 import com.example.coworking.data.data_models.get_slots.GetSlotsResponse
 import com.example.coworking.data.repository.Repository
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.async
+import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import java.util.Date
 import javax.inject.Inject
@@ -36,34 +38,57 @@ class SlotsViewModel @Inject constructor(
         MutableLiveData()
     val _confirmBookingResponse: LiveData<ConfirmBookingResponseBody> = confirmBookingResponse
 
+    var errorData: MutableLiveData<String> = MutableLiveData()
+
+    private val coroutineExceptionHandler = CoroutineExceptionHandler { _, exception ->
+        errorData.value = exception.localizedMessage
+    }
+
 
     fun getAvailableSlotsForTheDate(date: Date) {
         getSlotsJob?.cancel()
-        getSlotsJob = viewModelScope.async(Dispatchers.IO) {
-            val getSlots = repository.getAvailableSlots(date)
+        getSlotsJob = viewModelScope.launch {
+            val getSlotsDeferred = viewModelScope.async {
+                repository.getAvailableSlots(date)
+            }
             withContext(Dispatchers.Main) {
-                availableSlotsForDate.value = getSlots
+                try {
+                    availableSlotsForDate.value = getSlotsDeferred.await()
+                } catch (e: Exception) {
+                    errorData.value = e.message
+                }
             }
         }
     }
 
     fun getSlotAvailability(date: Date, slotId: Int, type: Int) {
         getAvailableSlots?.cancel()
-        getAvailableSlots = viewModelScope.async {
-            val availableSlot = repository.getSlotAvailability(date, slotId, type)
+        getAvailableSlots = viewModelScope.launch {
+            val availableSlotDeferred = viewModelScope.async {
+                repository.getSlotAvailability(date, slotId, type)
+            }
             withContext(Dispatchers.Main) {
-                availableSlots.value = availableSlot
+                try {
+                    availableSlots.value = availableSlotDeferred.await()
+                } catch (e: Exception) {
+                    errorData.value = e.message
+                }
             }
         }
     }
 
-
     fun confirmBooking(confirmBookingRequestBody: ConfirmBookingRequestBody) {
         confirmBookingJob?.cancel()
-        confirmBookingJob = viewModelScope.async(Dispatchers.IO) {
-            val confirmBooking = repository.confirmSlotBooking(confirmBookingRequestBody)
+        confirmBookingJob = viewModelScope.launch(Dispatchers.IO + coroutineExceptionHandler) {
+            val confirmBookingDeferred = viewModelScope.async {
+                repository.confirmSlotBooking(confirmBookingRequestBody)
+            }
             withContext(Dispatchers.Main) {
-                confirmBookingResponse.value = confirmBooking
+                try {
+                    confirmBookingResponse.value = confirmBookingDeferred.await()
+                } catch (e: Exception) {
+                    errorData.value = e.message
+                }
             }
         }
     }

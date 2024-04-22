@@ -70,6 +70,14 @@ class SelectDateAndSlotFragment : Fragment(), SlotClickListener {
         slotsViewModel._availableSlotsForDate.observe(viewLifecycleOwner) {
             dateAndSlotAdapter.updateList(it.slots as ArrayList<Slot>)
         }
+
+        slotsViewModel.errorData.observe(viewLifecycleOwner) {
+            GlobalSnackBar.showSnackBar(
+                mBinding.root,
+                it,
+                false
+            )
+        }
     }
 
     private fun setUpAdapter() {
@@ -78,7 +86,6 @@ class SelectDateAndSlotFragment : Fragment(), SlotClickListener {
             GridLayoutManager(requireActivity(), 2, GridLayoutManager.VERTICAL, false)
         mBinding.rvAvailableSlots.layoutManager = gridLayoutManager
         mBinding.rvAvailableSlots.adapter = dateAndSlotAdapter
-
     }
 
     override fun dateAndSlotClickListener(slot: Slot) {

@@ -12,9 +12,11 @@ import com.example.coworking.data.repository.Repository
 import com.example.coworking.utils.ValidationResult
 import com.example.coworking.utils.Validator
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.async
+import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
@@ -35,6 +37,10 @@ class LoginViewModel @Inject constructor(
 
 
     var errorData: MutableLiveData<String> = MutableLiveData()
+
+    private val coroutineExceptionHandler = CoroutineExceptionHandler { _, exception ->
+        errorData.value = exception.localizedMessage
+    }
 
     //Create User
     fun validateUserAndCreateAccount(fullName: String, mobileNumber: String, email: String) {
@@ -57,14 +63,20 @@ class LoginViewModel @Inject constructor(
 
     private fun createAccount(fullName: String, mobileNumber: String, email: String) {
         createAccountJob?.cancel()
-        createAccountJob = viewModelScope.async(Dispatchers.IO) {
-            val createAccountRequestBody = CreateAccountRequestBody(
-                email = email,
-                name = fullName
-            )
-            val createAccount = repository.createUserAccount(createAccountRequestBody)
+        createAccountJob = viewModelScope.launch(Dispatchers.IO + coroutineExceptionHandler) {
+            val createAccountDeferred = viewModelScope.async {
+                val createAccountRequestBody = CreateAccountRequestBody(
+                    email = email,
+                    name = fullName
+                )
+                repository.createUserAccount(createAccountRequestBody)
+            }
             withContext(Dispatchers.Main) {
-                responseCreateAccount.value = createAccount
+                try {
+                    responseCreateAccount.value = createAccountDeferred.await()
+                } catch (e: Exception) {
+                    errorData.value = e.message
+                }
             }
         }
     }
@@ -86,20 +98,22 @@ class LoginViewModel @Inject constructor(
     fun loginUser(emailOrPhoneNumber: String, password: String) {
         if (emailOrPhoneNumber.isNotEmpty() && password.isNotEmpty()) {
             loginJob?.cancel()
-            loginJob = viewModelScope.async(Dispatchers.IO) {
-
-                val loginRequestBody = LoginRequestBody(
-                    email = emailOrPhoneNumber,
-                    password = password
-                )
-
-                val loginRequest = repository.userLogin(loginRequestBody)
+            loginJob = viewModelScope.launch(Dispatchers.IO + coroutineExceptionHandler) {
+                val loginDeferred = viewModelScope.async {
+                    val loginRequestBody = LoginRequestBody(
+                        email = emailOrPhoneNumber,
+                        password = password
+                    )
+                    repository.userLogin(loginRequestBody)
+                }
                 withContext(Dispatchers.Main) {
-                    responseLogin.value = loginRequest
+                    try {
+                        responseLogin.value = loginDeferred.await()
+                    } catch (e: Exception) {
+                        errorData.value = e.message
+                    }
                 }
             }
-        } else {
-            errorData.value = "Please enter valid Data!!!"
         }
     }
 }

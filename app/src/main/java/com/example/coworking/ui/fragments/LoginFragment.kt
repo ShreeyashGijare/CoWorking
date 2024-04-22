@@ -37,9 +37,7 @@ class LoginFragment : Fragment() {
 
         mBinding.etPassword.setInputType(InputType.TYPE_TEXT_VARIATION_PASSWORD)
         mBinding.etPassword.setTransFormation(PasswordTransformationMethod())
-
         setObserver()
-
         mBinding.tvLblCreateAccount.setOnClickListener {
             findNavController().navigate(R.id.action_loginFragment_to_createAccountFragment)
         }
@@ -55,7 +53,7 @@ class LoginFragment : Fragment() {
     private fun setObserver() {
         loginViewModel._responseLogin.observe(viewLifecycleOwner) {
             UserManager.setCurrentCustomerId(it.user_id, mBinding.etMobileNumber.getData())
-            findNavController().navigate(R.id.nav_main_content)
+            findNavController().navigate(R.id.action_nav_main_content)
         }
 
         loginViewModel.errorData.observe(viewLifecycleOwner) {

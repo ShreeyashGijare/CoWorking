@@ -12,6 +12,7 @@ import com.example.coworking.data.data_models.get_user_booking.Booking
 import com.example.coworking.databinding.FragmentBookingHistoryBinding
 import com.example.coworking.ui.adapter.UserBookingHistoryAdapter
 import com.example.coworking.ui.viewmodel.BookingViewModel
+import com.example.coworking.utils.GlobalSnackBar
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -50,6 +51,14 @@ class BookingHistoryFragment : Fragment() {
     private fun setObserver() {
         bookingViewModel._userBookingData.observe(viewLifecycleOwner) {
             userBookingHistoryAdapter.updateList(it.bookings as ArrayList<Booking>)
+        }
+
+        bookingViewModel.errorData.observe(viewLifecycleOwner) {
+            GlobalSnackBar.showSnackBar(
+                mBinding.root,
+                it,
+                false
+            )
         }
     }
 }

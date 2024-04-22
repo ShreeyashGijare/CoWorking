@@ -68,8 +68,6 @@ class AvailableDesksOrRoomsFragment : Fragment(), SlotClickListener {
                     errorMessage,
                     false
                 )
-
-
             } else {
                 confirmAlertDialog()
             }
@@ -85,6 +83,14 @@ class AvailableDesksOrRoomsFragment : Fragment(), SlotClickListener {
             confirmBookingDialog.dismiss()
             GlobalSnackBar.showSnackBar(mBinding.root, it.message, true)
             findNavController().navigate(R.id.action_availableDesksOrRoomsFragment_to_homeFragment)
+        }
+
+        slotsViewModel.errorData.observe(viewLifecycleOwner) {
+            GlobalSnackBar.showSnackBar(
+                mBinding.root,
+                it,
+                false
+            )
         }
     }
 
